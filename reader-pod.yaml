@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: reader-991818161
+  labels:
+    student: "991818161"
+spec:
+  restartPolicy: Never
+  containers:
+    - name: reader
+      image: busybox:1.28
+      command: ["cat", "/data/report.txt"]
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: reports-pvc-991818161

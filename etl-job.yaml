@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: etl-job-991818161
+  labels:
+    student: "991818161"
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        student: "991818161"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: etl
+        image: busybox:1.28
+        command: ["sh", "-c"]
+        args: ['echo "final-report-991818161 at $(date)" > /data/report.txt && cat /data/report.txt']
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: reports-pvc-991818161

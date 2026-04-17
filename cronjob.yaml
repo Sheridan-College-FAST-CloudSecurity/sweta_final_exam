@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: heartbeat-cron-991818161
+  labels:
+    student: "991818161"
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            student: "991818161"
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: heartbeat
+            image: busybox:1.28
+            command: ["sh", "-c"]
+            args: ['echo "heartbeat-991818161 $(date)" >> /data/report.txt']
+            volumeMounts:
+            - name: data
+              mountPath: /data
+          volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: reports-pvc-991818161

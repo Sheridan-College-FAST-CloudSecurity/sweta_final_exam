@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dns-check-991818161
+  labels:
+    student: "991818161"
+spec:
+  restartPolicy: Never
+  containers:
+    - name: dns-check
+      image: busybox:1.28
+      command:
+        - sh
+        - -c
+        - |
+          echo "=== pod 0 ==="
+          wget -qO- http://web-sts-991818161-0.sts-headless-991818161
+          echo
+          echo "=== pod 1 ==="
+          wget -qO- http://web-sts-991818161-1.sts-headless-991818161
